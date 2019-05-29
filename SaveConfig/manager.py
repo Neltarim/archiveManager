@@ -3,7 +3,7 @@
 
 from CFdef import *
 
-def menu():
+def menu(): #menu principal
 
     choice = str()
     
@@ -15,7 +15,7 @@ def menu():
 
 print("Welcome to the BMEC archive manager\n")
 
-while True:
+while True: #boucle infinie
 
     choice = menu()
 

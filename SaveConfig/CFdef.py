@@ -7,43 +7,43 @@ import time
 
 #******** PICKLE FUNCTIONS *****
 
-def CFdumper(name, src, dest):
+def CFdumper(name, src, dest): #stocke la config dans un fichier
 
     configPath = "configFile/" + name
 
     with open(configPath, "wb") as my_file:
-        file_pickler = pickle.Pickler(my_file)
+        file_pickler = pickle.Pickler(my_file) #cree un pickler sur my_file
 
-        file_pickler.dump(name)
-        file_pickler.dump(src)
-        file_pickler.dump(dest)
+        file_pickler.dump(name) #dump le nom de la save
+        file_pickler.dump(src)  #la source
+        file_pickler.dump(dest) #la destination
 
-def CFshow(name, src, dest):
+def CFshow(name, src, dest): #affiche un config file definit
 
     configPath = "configFile/" + name
 
     with open(configPath, "rb") as my_file:
         file_pickler = pickle.Unpickler(my_file)
 
-    name = file_pickler.load()
-    src = file_pickler.load()
-    dest = file_pickler.load()
+    name = file_pickler.load() #charge le nom
+    src = file_pickler.load()  #charge la source
+    dest = file_pickler.load() #charge la destination
 
     print("name = ", name)
     print("source = ", src)
     print("destination = ", dest)
 
-def CFdirShow():
+def CFdirShow(): #affiche les noms de tout les config files
 
     print("Actuals save : ")
-    CFpath = "/home/neltarim/Documents/archiveManager/configFile"
-    dirs = os.listdir(CFpath)
-    for file in dirs:
+    CFpath = "/home/neltarim/Documents/archiveManager/SaveConfig/configFile"
+    dirs = os.listdir(CFpath) #stocke les noms dans un dico
+    for file in dirs:         #affiche le tout
         print(file)
 
-# ******* SAVE FUNCTIONS ********
+# ******* MENU FUNCTIONS ********
 
-def newSave():
+def newSave(): #cree une nouvelle sauvegarde
     print("New save configuration >>> ")
     
     name = str()
@@ -52,11 +52,13 @@ def newSave():
 
     yesno = str()
 
+    #demande les infos au user
     name = input("Define a name for your save : ")
     src = input("Define the source : ")
     dest = input("Define the destination : ")
 
     print()
+    #affiche une confirmation
     print("name = ", name)
     print("source = ", src)
     print("destination = ", dest)
@@ -65,15 +67,15 @@ def newSave():
     if yesno == "no":
         print("return to menu ...")
         print("\n\n\n")
-        return 0
+        return newSave() #retour au debut recursif
 
     print("Creating the config file ...")
 
-    CFdumper(name, src, dest)
+    CFdumper(name, src, dest) #definition  plus haut
     print("config file created, back to menu.")
     print("\n\n\n")
 
-def modifySave():
+def modifySave(): #modifie une sauvegarde existante
     print("Modify save >>>")
 
     name = str()
@@ -83,7 +85,7 @@ def modifySave():
     yesno = str()
     choice = str()
 
-    CFdirShow()
+    CFdirShow() #definition plus haut
 
     name = input("change : ")
     print()
@@ -110,7 +112,7 @@ def modifySave():
     print("config file modified, back to menu.")
     print("\n\n\n")
 
-def delSave():
+def delSave(): #supprime une sauvegarde existante
     print("Delete save >>>")
 
     name = str()
@@ -128,19 +130,12 @@ def delSave():
         os.remove(namePath)
         print("{} removed.".format(name))
         print("\n\n\n")
-    else:
-        delSave()
 
-def showSaves():
+def showSaves(): #affiche les sauvegardes actuelles
     print("Actual saves >>>")
 
     CFdirShow()
 
     time.sleep(1)
     key = input("Press any key to quit ... : ")
-
-
-    if key != "wfesesgr":
-        print("\n\n\n")
-        return 0
-        
+    print("\n\n\n")
